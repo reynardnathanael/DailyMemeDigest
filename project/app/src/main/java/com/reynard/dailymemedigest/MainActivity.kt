@@ -7,17 +7,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 //    bottom navbar
-    val fragments: Array<Fragment> = ArrayList()
+//    val fragments: Array<Fragment> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fragments.add(HomeFragment())
-        fragments.add(MyCreationFragment())
-        fragments.add(LeaderboardFragment())
-        fragments.add(SettingsFragment())
-
-        viewPager.adapter = MyAdapter(this, fragments)
+//        fragments.add(HomeFragment())
+//        fragments.add(MyCreationFragment())
+//        fragments.add(LeaderboardFragment())
+//        fragments.add(SettingsFragment())
+//
+//        viewPager.adapter = MyAdapter(this, fragments)
     }
 }
