@@ -24,7 +24,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/trollface" />
+                app:srcCompat="@drawable/logo" />
 
             <Button
                 android:id="@+id/btnCreateAcc"
@@ -34,10 +34,12 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
-                android:text="Button"
+                android:text="Create Account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInputPassLogin" />
+                app:layout_constraintTop_toBottomOf="@+id/txtInputPassLogin"
+                app:strokeColor="#1e88e5"
+                app:strokeWidth="2dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txtInputUsernameLogin"
@@ -102,9 +104,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginEnd="32dp"
-                android:text="Button"
+                android:text="Sign In"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnCreateAcc" />
