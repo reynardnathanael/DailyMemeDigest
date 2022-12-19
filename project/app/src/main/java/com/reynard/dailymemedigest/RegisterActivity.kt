@@ -17,38 +17,56 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         btnRegister.setOnClickListener {
-            // create volley
-            val q = Volley.newRequestQueue(it.context)
-
-            // create choice url (localhost or hosting)
-            val local = "http://10.0.2.2/DailyMemeDigest/api/"
-            val host = "http://ubaya.fun/native/160720034/memes_api/"
-
-            // create url
-            val url = local + "register.php"
-
-            val stringRequest = object: StringRequest(
-                Request.Method.POST, url,
-                Response.Listener {
-                    val obj = JSONObject(it)
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-
-                    finish()
-                },
-                Response.ErrorListener {
-                    Toast.makeText(this, "please check your input data!", Toast.LENGTH_SHORT).show()
-                }
-            ){
-                override fun getParams(): MutableMap<String, String>? {
-                    var map = HashMap<String, String>()
-                    map["username"] = txtUsernameRegist.text.toString()
-                    map["password"] = txtPassRegist.text.toString()
-                    return map
-                }
+            // check password
+            if (txtPassRegist.text.toString() != txtRepassRegist.text.toString()) {
+                Toast.makeText(this, "Password and Repeat Password must be match!", Toast.LENGTH_SHORT).show()
             }
+            else {
+                // create volley
+                val q = Volley.newRequestQueue(it.context)
 
-            q.add(stringRequest)
+                // create url options (localhost or hosting)
+                val local = "http://10.0.2.2/DailyMemeDigest/api/"
+                val host = "http://ubaya.fun/native/160720034/memes_api/"
+
+                // create api url
+                val url = "$local/register.php"
+
+                val stringRequest = object: StringRequest(
+                    Request.Method.POST, url,
+                    // if success...
+                    Response.Listener {
+                        // retrieve success message from api
+                        val obj = JSONObject(it)
+                        Toast.makeText(this, obj.getString("message"), Toast.LENGTH_SHORT).show()
+
+                        // intent to LoginActivity
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+
+                        finish()
+                    },
+                    // if error...
+                    Response.ErrorListener {
+                        Toast.makeText(this, "please check your input data!", Toast.LENGTH_SHORT).show()
+                    }
+                ){
+                    // injects data to send to API
+                    override fun getParams(): MutableMap<String, String>? {
+                        // collection of data <key, value>
+                        var map = HashMap<String, String>()
+
+                        // POST variables
+                        map["firstname"] = txtFirstName.text.toString()
+                        map["lastname"] = txtLastName.text.toString()
+                        map["username"] = txtUsernameRegist.text.toString()
+                        map["password"] = txtPassRegist.text.toString()
+                        return map
+                    }
+                }
+
+                q.add(stringRequest)
+            }
         }
     }
 }
