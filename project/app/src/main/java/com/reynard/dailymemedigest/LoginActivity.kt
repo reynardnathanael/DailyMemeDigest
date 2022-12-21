@@ -9,7 +9,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
@@ -66,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                     var map = HashMap<String, String>()
 
                     // POST variables
-                    map["username"] = txtUsernameLogin.text.toString()
+                    map["username"] = txtFirstNameSettings.text.toString()
                     map["password"] = txtPassLogin.text.toString()
                     return map
                 }
