@@ -13,27 +13,29 @@
         die();
     }
 
-    if(isset($_POST['username']) && isset($_POST['password'])) {
+    if(isset($_POST['username']) && isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['privacy_setting'])) {
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $privacy_setting = $_POST['privacy_setting'];
 
         $c->set_charset("UTF8");
-        $sql = "SELECT * FROM users WHERE username=? AND password=?";
+        $sql = "UPDATE users SET firstname=?, lastname=?, privacy_setting=? WHERE username=?";
         $stmt = $c->prepare($sql);
-        $stmt->bind_param("ss", $username, $password);
+        $stmt->bind_param("ssi", $username, $password, $privacy_setting);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($obj = $result->fetch_assoc()) {
             $arr = array(
                 "result" => "success",
-                "message" => "Login successfull!"
+                "message" => "Update successfull!"
             );
         }
         else {
             $arr = array(
                 "result" => "error",
-                "message" => "Wrong username or password!"
+                "message" => "Username not found!"
             );
         }
 
