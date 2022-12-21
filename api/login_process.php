@@ -24,10 +24,11 @@
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($obj = $result->fetch_assoc()) {
+        if ($obj = $result->fetch_object()) {
             $arr = array(
                 "result" => "success",
-                "message" => "Login successfull!"
+                "message" => "Login successfull!",
+                "data" => $obj
             );
         }
         else {

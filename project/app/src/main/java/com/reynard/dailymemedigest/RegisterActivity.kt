@@ -40,11 +40,13 @@ class RegisterActivity : AppCompatActivity() {
                         val obj = JSONObject(it)
                         Toast.makeText(this, obj.getString("message"), Toast.LENGTH_SHORT).show()
 
-                        // intent to LoginActivity
-                        val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(intent)
+                        if (obj.getString("result") == "success") {
+                            // intent to LoginActivity
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
 
-                        finish()
+                            finish()
+                        }
                     },
                     // if error...
                     Response.ErrorListener {
