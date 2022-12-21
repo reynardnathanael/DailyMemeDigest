@@ -42,7 +42,7 @@
                 app:strokeWidth="2dp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtInputFirstNameSettings"
+                android:id="@+id/txtInputUrlAdd"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 app:hintAnimationEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInputFirstNameSettings">
+                app:layout_constraintTop_toBottomOf="@+id/txtInputUrlAdd">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtPassLogin"
