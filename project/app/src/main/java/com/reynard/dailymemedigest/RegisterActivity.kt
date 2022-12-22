@@ -25,12 +25,8 @@ class RegisterActivity : AppCompatActivity() {
                 // create volley
                 val q = Volley.newRequestQueue(it.context)
 
-                // create url options (localhost or hosting)
-                val local = "http://10.0.2.2/DailyMemeDigest/api/"
-                val host = "http://ubaya.fun/native/160720034/memes_api/"
-
                 // create api url
-                val url = "$local/register.php"
+                val url = "${Global.localApi}/register.php"
 
                 val stringRequest = object: StringRequest(
                     Request.Method.POST, url,

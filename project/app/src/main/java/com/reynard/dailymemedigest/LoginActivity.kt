@@ -19,8 +19,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         // declare SharedPreferences
-        var sharedFile = "com.reynard.dailymemedigest"
-        var shared: SharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
+        var shared: SharedPreferences = getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
 
         val username = shared.getString("USERNAME", "false")
         val password = shared.getString("PASSWORD", "false")
@@ -38,12 +37,8 @@ class LoginActivity : AppCompatActivity() {
                 // create volley
                 val q = Volley.newRequestQueue(it.context)
 
-                // create url options (localhost or hosting)
-                val local = "http://10.0.2.2/DailyMemeDigest/api/"
-                val host = "http://ubaya.fun/native/160720034/memes_api/"
-
                 // create api url
-                val url = "$local/login_process.php"
+                val url = "${Global.localApi}/login_process.php"
 
                 val stringRequest = object: StringRequest(
                     Request.Method.POST, url,
@@ -90,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                         var map = HashMap<String, String>()
 
                         // POST variables
-                        map["username"] = txtFirstNameSettings.text.toString()
+                        map["username"] = txtUsernameLogin.text.toString()
                         map["password"] = txtPassLogin.text.toString()
                         return map
                     }

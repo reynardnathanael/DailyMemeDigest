@@ -2,11 +2,11 @@ package com.reynard.dailymemedigest
 
 import android.Manifest
 import android.app.Activity
-import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -17,8 +17,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_add_meme.*
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.io.File
+import org.json.JSONObject
 
 
 class SettingsFragment : Fragment() {
@@ -40,6 +45,26 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var shared: SharedPreferences =
+            requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+
+        val userid = shared.getInt("USERID", 0)
+        val username = shared.getString("USERNAME", "")
+        val firstname = shared.getString("FIRSTNAME", "")
+        var lastname = shared.getString("LASTNAME", "")
+        val registdate = shared.getString("REGISTDATE", "")
+        val privacy = shared.getInt("PRIVACY", 0)
+        if (lastname == "null") {
+            lastname = ""
+        }
+        txtNameSettings.text = "$firstname $lastname"
+        txtRegisterDateSettings.text = "Active since $registdate"
+        txtUsernameSettings.text = username
+        txtFirstNameSettings.setText(firstname)
+        txtLastNameSettings.setText(lastname)
+        if (privacy === 1) {
+            checkHide.isChecked = true
+        }
         imgAvatarSettings.setOnClickListener {
             Log.d("test", "button")
             if (ActivityCompat.checkSelfPermission(
@@ -59,6 +84,77 @@ class SettingsFragment : Fragment() {
             } else {
                 chooseIntent()
             }
+        }
+        btnSaveSettings.setOnClickListener {
+            // create volley
+            val q = Volley.newRequestQueue(it.context)
+
+            // create api url
+            val url = "${Global.localApi}/update_profile.php"
+
+            val stringRequest = object : StringRequest(
+                Request.Method.POST, url,
+                // if success...
+                Response.Listener {
+                    // retrieve success message from api
+                    val obj = JSONObject(it)
+
+
+                    Toast.makeText(requireContext(), obj.getString("message"), Toast.LENGTH_SHORT)
+                        .show()
+
+                    if (obj.getString("result") == "success") {
+                        // retrieve JSON object named "data"
+                        val data = obj.getJSONObject("data")
+
+                        // put all the user's data to SharedPreferences
+                        var editor: SharedPreferences.Editor = shared.edit()
+                        editor.putString("FIRSTNAME", data.getString("firstname"))
+                        editor.putString("LASTNAME", data.getString("lastname"))
+                        editor.putInt("PRIVACY", data.getInt("privacy_setting"))
+
+                        editor.apply()
+                    }
+
+                },
+                // if error...
+                Response.ErrorListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "please check your input data!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            ) {
+                // injects data to send to API
+                override fun getParams(): MutableMap<String, String>? {
+                    // collection of data <key, value>
+                    var map = HashMap<String, String>()
+
+                    // POST variables
+                    map["firstname"] = txtFirstNameSettings.text.toString()
+                    map["lastname"] = txtLastNameSettings.text.toString()
+                    if (checkHide.isChecked) {
+                        map["privacy_setting"] = "1"
+                    } else {
+                        map["privacy_setting"] = "0"
+                    }
+                    map["user_id"] = userid.toString()
+                    return map
+                }
+            }
+
+            q.add(stringRequest)
+
+        }
+        fabLogoutSettings.setOnClickListener {
+            shared.edit().clear().apply()
+
+            // intent to LoginActivity
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+
+            activity?.finish()
         }
     }
 
@@ -82,6 +178,7 @@ class SettingsFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK) {
+            val imageBitmap: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), data?.data)
             imgAvatarSettings.setImageURI(data?.data)
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val extras = data!!.extras
