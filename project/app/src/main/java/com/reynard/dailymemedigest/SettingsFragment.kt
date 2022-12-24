@@ -99,7 +99,6 @@ class SettingsFragment : Fragment() {
                     // retrieve success message from api
                     val obj = JSONObject(it)
 
-
                     Toast.makeText(requireContext(), obj.getString("message"), Toast.LENGTH_SHORT)
                         .show()
 
