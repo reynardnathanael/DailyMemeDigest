@@ -20,11 +20,13 @@ class AddMemeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_meme)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         var shared: SharedPreferences =
             getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
-
         val userid = shared.getInt("USERID", 0)
+
         txtUrlAdd.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }

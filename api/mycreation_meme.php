@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 $c = new mysqli("localhost", "root", "", "native_160720034");
+$arr = [];
 
 // check if connection success or not
 if ($c->connect_errno) {
@@ -16,13 +17,12 @@ if ($c->connect_errno) {
 
 $c->set_charset("UTF8");
 
-$arr = [];
 if (isset($_POST['username'])) {
 
     $username = $_POST['username'];
 
     $c->set_charset("UTF8");
-    $sql = "SELECT * from memes as m inner join users as u on m.user_id=u.user_id where username = ?";
+    $sql = "SELECT * from memes as m inner join users as u on m.user_id=u.user_id where username = ? order by meme_id desc";
     $stmt = $c->prepare($sql);
     $stmt->bind_param('s', $username);
     $stmt->execute();

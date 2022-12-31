@@ -3,6 +3,7 @@ package com.reynard.dailymemedigest
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +16,18 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_my_creation.*
 import org.json.JSONObject
 
 class MyCreationFragment : Fragment() {
-    var memes: ArrayList<Meme> = ArrayList()
+    var myMemes: ArrayList<Meme> = ArrayList()
 
-    fun displayList() {
+    fun displayList(user_id: String) {
         val lm: LinearLayoutManager = LinearLayoutManager(activity)
         var recyclerView = view?.findViewById<RecyclerView>(R.id.myCreationView)
         recyclerView?.layoutManager = lm
         recyclerView?.setHasFixedSize(true)
-        recyclerView?.adapter = HomeAdapter(memes)
+        recyclerView?.adapter = HomeAdapter(myMemes, user_id)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,18 +36,20 @@ class MyCreationFragment : Fragment() {
         // get username from SharedPreferences
         var shared: SharedPreferences =
             requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        val userId = shared.getInt("USERID", 0)
         val username = shared.getString("USERNAME", "")
 
         // create volley
         var q = Volley.newRequestQueue(activity)
 
         // create api url
-        val url = "${Global.localApi}/home_meme.php"
+        val url = "${Global.localApi}/mycreation_meme.php"
 
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
             // if success...
             Response.Listener {
+                Log.d("mycreation", it)
                 // retrieve success message from api
                 val obj = JSONObject(it)
 
@@ -62,10 +66,11 @@ class MyCreationFragment : Fragment() {
                             memeObj.getString("username"),
                             memeObj.getString("avatar_img")
                         )
+                        myMemes.add(meme)
                     }
                 }
 
-                displayList()
+                displayList(userId.toString())
             },
             // if error...
             Response.ErrorListener {

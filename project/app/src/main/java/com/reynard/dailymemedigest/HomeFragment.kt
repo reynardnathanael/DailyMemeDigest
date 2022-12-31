@@ -23,16 +23,21 @@ import org.json.JSONObject
 class HomeFragment : Fragment() {
     var memes: ArrayList<Meme> = ArrayList()
 
-    fun displayList() {
+    fun displayList(user_id: String) {
         val lm: LinearLayoutManager = LinearLayoutManager(activity)
         var recyclerView = view?.findViewById<RecyclerView>(R.id.homeView)
         recyclerView?.layoutManager = lm
         recyclerView?.setHasFixedSize(true)
-        recyclerView?.adapter = HomeAdapter(memes)
+        recyclerView?.adapter = HomeAdapter(memes, user_id)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // get username from SharedPreferences
+        var shared: SharedPreferences =
+            requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        val userId = shared.getInt("USERID", 0)
 
         // create volley
         var q = Volley.newRequestQueue(activity)
@@ -43,12 +48,14 @@ class HomeFragment : Fragment() {
         val stringRequest = StringRequest(
             Request.Method.POST, url,
             // if success...
-            Response.Listener {
+            {
+                Log.d("home", it)
                 // retrieve success message from api
                 val obj = JSONObject(it)
 
                 if (obj.getString("result") == "success") {
                     val data = obj.getJSONArray("data")
+                    Log.d("length", data.length().toString())
                     for (i in 0 until data.length()) {
                         val memeObj = data.getJSONObject(i)
                         val meme = Meme(
@@ -60,13 +67,14 @@ class HomeFragment : Fragment() {
                             memeObj.getString("username"),
                             memeObj.getString("avatar_img")
                         )
+                        memes.add(meme)
                     }
                 }
 
-                displayList()
+                displayList(userId.toString())
             },
             // if error...
-            Response.ErrorListener {
+            {
                 Toast.makeText(
                     requireContext(),
                     "Sorry There's an Error in our system",
