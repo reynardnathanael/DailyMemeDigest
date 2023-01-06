@@ -14,11 +14,14 @@
             android:id="@+id/homeView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
             android:layout_marginBottom="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAdd"
@@ -30,6 +33,98 @@
             android:src="@drawable/ic_baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/groupFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:enabled="false"
+                android:text="Order"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_color" />
+
+            <RadioButton
+                android:id="@+id/rdoDate"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:elevation="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="Date"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_color" />
+
+            <RadioButton
+                android:id="@+id/rdoLike"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:elevation="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="Like"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_color" />
+
+            <RadioButton
+                android:id="@+id/rdoView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:elevation="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="View"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_color" />
+
+            <RadioButton
+                android:id="@+id/rdoComments"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:elevation="4dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="Comments"
+                android:textAlignment="center"
+                android:textColor="@drawable/text_color" />
+        </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

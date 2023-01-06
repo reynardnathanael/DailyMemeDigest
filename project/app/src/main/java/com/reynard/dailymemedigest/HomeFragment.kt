@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +24,7 @@ import org.json.JSONObject
 
 class HomeFragment : Fragment() {
     var memes: ArrayList<Meme> = ArrayList()
+    var order = "m.meme_id";
 
     fun displayList(user_id: String) {
         val lm: LinearLayoutManager = LinearLayoutManager(activity)
@@ -31,9 +34,9 @@ class HomeFragment : Fragment() {
         recyclerView?.adapter = HomeAdapter(memes, user_id)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    // add data to ArrayList memes from the API
+    fun addData(order_by: String) {
+        memes.clear()
         // get username from SharedPreferences
         var shared: SharedPreferences =
             requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
@@ -45,7 +48,7 @@ class HomeFragment : Fragment() {
         // create api url
         val url = "${Global.localApi}/home_meme.php"
 
-        val stringRequest = StringRequest(
+        val stringRequest = object : StringRequest(
             Request.Method.POST, url,
             // if success...
             {
@@ -81,9 +84,25 @@ class HomeFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        )
+        ){
+            // injects data to send to API
+            override fun getParams(): MutableMap<String, String>? {
+                // collection of data <key, value>
+                var map = HashMap<String, String>()
+
+                // POST variables
+                map["order"] = order_by
+                return map
+            }
+        }
 
         q.add(stringRequest)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        addData(order);
     }
 
     override fun onCreateView(
@@ -99,6 +118,20 @@ class HomeFragment : Fragment() {
         fabAdd.setOnClickListener {
             val intent = Intent(requireContext(), AddMemeActivity::class.java)
             startActivity(intent)
+        }
+
+        groupFilter.setOnCheckedChangeListener { radioGroup, id ->
+            if(id == R.id.rdoComments) {
+                order = "count(mc.comment_id)"
+            }
+            else if(id == R.id.rdoLike) {
+                order = "m.num_likes"
+            }
+            else if(id == R.id.rdoDate) {
+                order = "m.meme_id"
+
+            }
+            addData(order);
         }
     }
 }

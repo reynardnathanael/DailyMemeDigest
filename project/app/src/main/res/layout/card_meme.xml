@@ -45,7 +45,7 @@
             <ImageView
                 android:id="@+id/imgMeme"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,22 +60,41 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/archivo_black"
                 android:text="top_text"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:shadowColor="#000000"
+                android:shadowDx="1.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
+                android:textAllCaps="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgMeme" />
+                app:layout_constraintTop_toTopOf="@+id/imgMeme" />
 
             <TextView
                 android:id="@+id/bottom_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/archivo_black"
                 android:text="bottom_text"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:shadowColor="#000000"
+                android:shadowDx="1.5"
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="@+id/imgMeme"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_textView" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/txtLike"
@@ -97,7 +116,7 @@
                 android:backgroundTint="#00FFFFFF"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_textView"
+                app:layout_constraintTop_toBottomOf="@+id/imgMeme"
                 app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
             <ImageButton
@@ -105,11 +124,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="-8dp"
-                android:layout_marginTop="1dp"
                 android:backgroundTint="#00FFFFFF"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/btnLike"
-                app:layout_constraintTop_toBottomOf="@+id/bottom_textView"
+                app:layout_constraintTop_toBottomOf="@+id/imgMeme"
                 app:srcCompat="@drawable/ic_outline_mode_comment_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

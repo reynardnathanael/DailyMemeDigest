@@ -16,7 +16,10 @@ if ($c->connect_errno) {
 }
 
 $c->set_charset("UTF8");
-$sql = "SELECT * from memes m inner join users u on m.user_id=u.user_id order by meme_id desc";
+$order = $_POST['order'];
+$sql = "SELECT m.meme_id, m.image_url, m.top_text, m.bottom_text, m.num_likes, u.username, u.avatar_img from memes m 
+inner join users u on m.user_id=u.user_id left join meme_comments mc on m.meme_id = mc.meme_id 
+group by m.meme_id order by $order desc";
 $result = $c->query($sql);
 
 $data = [];
