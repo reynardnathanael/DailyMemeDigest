@@ -131,6 +131,9 @@ class HomeFragment : Fragment() {
                 order = "m.meme_id"
 
             }
+            else if(id == R.id.rdoView) {
+                order = "m.num_views";
+            }
             addData(order);
         }
     }

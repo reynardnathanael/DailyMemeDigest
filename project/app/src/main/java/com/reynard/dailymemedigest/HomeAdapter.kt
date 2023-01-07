@@ -12,6 +12,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.card_meme.view.*
 import org.json.JSONObject
 
@@ -83,10 +84,45 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
         }
 
         holder.v.btnComment.setOnClickListener {
-            val commentIntent = Intent(holder.v.context, CommentActivity::class.java)
-            commentIntent.putExtra(USERID, user_id)
-            commentIntent.putExtra(MEMEID, memes[holder.adapterPosition].meme_id.toString())
-            holder.v.context.startActivity(commentIntent)
+            // +1 view for the clicked meme
+
+            // create volley
+            val q2 = Volley.newRequestQueue(it.context)
+
+            // create api url
+            val url = "${Global.localApi}/set_views.php"
+
+            val stringRequest = object: StringRequest(
+                Request.Method.POST, url,
+                // if success...
+                Response.Listener {
+                    // retrieve success message from api
+                    val obj = JSONObject(it)
+
+                    if (obj.getString("result") == "success") {
+                        // intent to CommentActivity
+                        val commentIntent = Intent(holder.v.context, CommentActivity::class.java)
+                        commentIntent.putExtra(USERID, user_id)
+                        commentIntent.putExtra(MEMEID, memes[holder.adapterPosition].meme_id.toString())
+                        holder.v.context.startActivity(commentIntent)
+                    }
+                },
+                // if error...
+                Response.ErrorListener {
+                    Toast.makeText(holder.v.context, "Sorry There's an Error in our system!", Toast.LENGTH_SHORT).show()
+                }
+            ){
+                // injects data to send to API
+                override fun getParams(): MutableMap<String, String>? {
+                    // collection of data <key, value>
+                    var map = HashMap<String, String>()
+
+                    // POST variables
+                    map["meme_id"] = memes[holder.adapterPosition].meme_id.toString()
+                    return map
+                }
+            }
+            q2.add(stringRequest)
         }
     }
 
