@@ -23,6 +23,11 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
     companion object{
         val USERID = "USERID"
         val MEMEID = "MEMEID"
+        val MEMEUSERNAME = "MEMEUSERNAME"
+        val MEMEAVATAR = "MEMEAVATAR"
+        val MEMEIMG = "MEMEIMG"
+        val TOPTEXT = "TOPTEXT"
+        val BOTTOMTEXT = "BOTTOMTEXT"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
@@ -60,8 +65,12 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
                     val obj = JSONObject(it)
 
                     when (obj.getString("message")) {
-                        "like" -> memes[holder.adapterPosition].num_likes++
-                        "dislike" -> memes[holder.adapterPosition].num_likes--
+                        "like" -> {
+                            memes[holder.adapterPosition].num_likes++
+                        }
+                        "dislike" -> {
+                            memes[holder.adapterPosition].num_likes--
+                        }
                     }
                     var newlikes = memes[holder.adapterPosition].num_likes
 
@@ -83,6 +92,7 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
             q.add(stringRequest)
         }
 
+        // for opening comment and view
         holder.v.btnComment.setOnClickListener {
             // +1 view for the clicked meme
 
@@ -104,6 +114,11 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
                         val commentIntent = Intent(holder.v.context, CommentActivity::class.java)
                         commentIntent.putExtra(USERID, user_id)
                         commentIntent.putExtra(MEMEID, memes[holder.adapterPosition].meme_id.toString())
+                        commentIntent.putExtra(MEMEUSERNAME, memes[holder.adapterPosition].username)
+                        commentIntent.putExtra(MEMEAVATAR, memes[holder.adapterPosition].avatar_img)
+                        commentIntent.putExtra(MEMEIMG, memes[holder.adapterPosition].image_url)
+                        commentIntent.putExtra(TOPTEXT, memes[holder.adapterPosition].top_text)
+                        commentIntent.putExtra(BOTTOMTEXT, memes[holder.adapterPosition].bottom_text)
                         holder.v.context.startActivity(commentIntent)
                     }
                 },
