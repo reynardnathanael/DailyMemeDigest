@@ -1,20 +1,28 @@
 package com.reynard.dailymemedigest
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer.*
+import kotlinx.android.synthetic.main.drawer_header.*
+import kotlinx.android.synthetic.main.drawer_header.view.*
 
 class MainActivity : AppCompatActivity() {
     // drawer
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
     //  navbar
@@ -24,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawer)
 //        setContentView(R.layout.activity_main)
+
+        var shared: SharedPreferences =
+            this.getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        val username = shared.getString("USERNAME", "")
+        val avatarImg = shared.getString("AVATAR", "")
 
         // bottom Navbar
         fragments.add(HomeFragment())
@@ -54,16 +67,28 @@ class MainActivity : AppCompatActivity() {
 
         // drawer Navbar
         drawerLayout = findViewById(R.id.drawer_layout)
-        drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        navigationView = findViewById(R.id.nav_view)
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
         // set supaya ada back button di drawer
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // set data diri user
+        var headerView: View = navigationView.getHeaderView(0)
+
+        Picasso.get().load(avatarImg).into(headerView.drawerImg)
+        headerView.drawer_username.text = username
+
         // nav_view ada di drawer
         // kalau item di nav_view di select akan menuju ke fragment tersebut
-        nav_view.setNavigationItemSelectedListener {
+        navigationView.setNavigationItemSelectedListener {
             viewPager.currentItem = when (it.itemId) {
                 R.id.ItemHome -> 0
                 R.id.ItemMyCreation -> 1
@@ -76,16 +101,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(drawerToggle.onOptionsItemSelected(item)){
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
-        }else{
+        } else {
             super.onBackPressed()
         }
     }
