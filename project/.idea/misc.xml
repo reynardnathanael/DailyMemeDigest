@@ -3,17 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/drawable/side_nav_bar.xml" value="0.3385" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/activity_add_meme.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/activity_comment.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/activity_drawer.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/activity_main.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/activity_main2.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/card_meme.xml" value="0.3614583333333333" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/comment_layout.xml" value="0.3614583333333333" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/content_main.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/drawer.xml" value="0.3614583333333333" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/drawer_header.xml" value="0.29743589743589743" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/fragment_gallery.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/fragment_home.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/fragment_leaderboard.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/fragment_my_creation.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/fragment_settings.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/fragment_slideshow.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/leaderboards_list.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/layout/nav_header_main.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/menu/activity_main_drawer.xml" value="0.3625" />
         <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/menu/main2.xml" value="0.3614583333333333" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/menu/main_activity2.xml" value="0.3625" />
+        <entry key="..\:/Kuliah/xampp/xampp 7.4.2/htdocs/NMP/DailyMemeDigest/project/app/src/main/res/menu/main_menu.xml" value="0.3625" />
         <entry key="..\:/xampp/htdocs/DailyMemeDigest/project/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.236" />
         <entry key="..\:/xampp/htdocs/DailyMemeDigest/project/app/src/main/res/drawable/radio_selected.xml" value="0.236" />
         <entry key="..\:/xampp/htdocs/DailyMemeDigest/project/app/src/main/res/drawable/radio_selector.xml" value="0.236" />
