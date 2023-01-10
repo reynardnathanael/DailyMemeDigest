@@ -41,6 +41,32 @@ class AddMemeActivity : AppCompatActivity() {
 
         })
 
+        txtTopText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                txtTop.text = txtTopText.text
+            }
+
+        })
+
+        txtBottomText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                txtBottom.text = txtBottomText.text
+            }
+
+        })
+
         btnSubmitAdd.setOnClickListener {
             // create volley
             val q = Volley.newRequestQueue(it.context)
@@ -48,7 +74,7 @@ class AddMemeActivity : AppCompatActivity() {
             // create api url
             val url = "${Global.localApi}/add_meme.php"
 
-            val stringRequest = object: StringRequest(
+            val stringRequest = object : StringRequest(
                 Request.Method.POST, url,
                 // if success...
                 Response.Listener {
@@ -66,7 +92,7 @@ class AddMemeActivity : AppCompatActivity() {
                 Response.ErrorListener {
                     Toast.makeText(this, "please check your input data!", Toast.LENGTH_SHORT).show()
                 }
-            ){
+            ) {
                 // injects data to send to API
                 override fun getParams(): MutableMap<String, String>? {
                     // collection of data <key, value>
