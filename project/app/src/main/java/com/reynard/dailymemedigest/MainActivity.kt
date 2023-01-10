@@ -1,6 +1,7 @@
 package com.reynard.dailymemedigest
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             this.getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
         val username = shared.getString("USERNAME", "")
         val avatarImg = shared.getString("AVATAR", "")
+        val name = shared.getString("FIRSTNAME", "") + " " + shared.getString("LASTNAME", "")
 
         // bottom Navbar
         fragments.add(HomeFragment())
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity() {
 
         Picasso.get().load(avatarImg).into(headerView.drawerImg)
         headerView.drawer_username.text = username
+        headerView.drawer_name.text = name
 
         // nav_view ada di drawer
         // kalau item di nav_view di select akan menuju ke fragment tersebut
@@ -98,6 +101,19 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+//        fabLogout.setOnClickListener {
+//            // remove sharedPreferences
+//            shared.edit().clear().apply()
+//
+//            // intent to LoginActivity
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//
+//            finish()
+//        }
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

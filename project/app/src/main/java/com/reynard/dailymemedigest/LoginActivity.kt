@@ -57,7 +57,9 @@ class LoginActivity : AppCompatActivity() {
                             var editor:SharedPreferences.Editor = shared.edit()
                             editor.putInt("USERID", data.getInt("user_id"))
                             editor.putString("FIRSTNAME", data.getString("firstname"))
-                            editor.putString("LASTNAME", data.getString("lastname"))
+                            if (data.getString("lastname") != "null") {
+                                editor.putString("LASTNAME", data.getString("lastname"))
+                            }
                             editor.putString("USERNAME", data.getString("username"))
                             editor.putString("PASSWORD", data.getString("password"))
                             editor.putString("REGISTDATE", data.getString("registration_date"))
