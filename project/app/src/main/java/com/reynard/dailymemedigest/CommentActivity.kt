@@ -1,22 +1,17 @@
 package com.reynard.dailymemedigest
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_add_meme.*
 import kotlinx.android.synthetic.main.activity_comment.*
-import kotlinx.android.synthetic.main.comment_layout.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +56,7 @@ class CommentActivity : AppCompatActivity() {
         val q = Volley.newRequestQueue(this)
 
         // create api url
-        val url = "${Global.localApi}/get_comment.php"
+        val url = "${Global.api}/get_comment.php"
 
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
@@ -117,7 +112,7 @@ class CommentActivity : AppCompatActivity() {
             val q2 = Volley.newRequestQueue(it.context)
 
             // create api url
-            val url = "${Global.localApi}/add_comment.php"
+            val url = "${Global.api}/add_comment.php"
 
             val stringRequest = object : StringRequest(
                 Request.Method.POST, url,

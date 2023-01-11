@@ -15,8 +15,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_my_creation.*
 import org.json.JSONObject
 
 class MyCreationFragment : Fragment() {
@@ -43,7 +41,7 @@ class MyCreationFragment : Fragment() {
         var q = Volley.newRequestQueue(activity)
 
         // create api url
-        val url = "${Global.localApi}/mycreation_meme.php"
+        val url = "${Global.api}/mycreation_meme.php"
 
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,

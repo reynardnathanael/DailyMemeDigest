@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
                 val q = Volley.newRequestQueue(it.context)
 
                 // create api url
-                val url = "${Global.localApi}/register.php"
+                val url = "${Global.api}/register.php"
 
                 val stringRequest = object: StringRequest(
                     Request.Method.POST, url,

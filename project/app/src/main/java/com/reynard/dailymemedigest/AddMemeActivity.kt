@@ -13,7 +13,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_add_meme.*
-import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 
 class AddMemeActivity : AppCompatActivity() {
@@ -72,7 +71,7 @@ class AddMemeActivity : AppCompatActivity() {
             val q = Volley.newRequestQueue(it.context)
 
             // create api url
-            val url = "${Global.localApi}/add_meme.php"
+            val url = "${Global.api}/add_meme.php"
 
             val stringRequest = object : StringRequest(
                 Request.Method.POST, url,

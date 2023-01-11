@@ -12,7 +12,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.card_meme.view.*
 import org.json.JSONObject
 
@@ -55,7 +54,7 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
             val q = Volley.newRequestQueue(it.context)
 
             // create api url
-            val url = "${Global.localApi}/set_likes.php"
+            val url = "${Global.api}/set_likes.php"
 
             val stringRequest = object : StringRequest(
                 Request.Method.POST, url,
@@ -100,7 +99,7 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
             val q2 = Volley.newRequestQueue(it.context)
 
             // create api url
-            val url = "${Global.localApi}/set_views.php"
+            val url = "${Global.api}/set_views.php"
 
             val stringRequest = object: StringRequest(
                 Request.Method.POST, url,

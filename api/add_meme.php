@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+// $c = new mysqli("localhost", "native_160720034", "ubaya", "native_160720034");
 $c = new mysqli("localhost", "root", "", "native_160720034");
 
 // check if connection success or not

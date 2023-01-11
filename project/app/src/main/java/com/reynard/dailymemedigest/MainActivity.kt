@@ -102,16 +102,16 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-//        fabLogout.setOnClickListener {
-//            // remove sharedPreferences
-//            shared.edit().clear().apply()
-//
-//            // intent to LoginActivity
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//
-//            finish()
-//        }
+        headerView.fabLogout.setOnClickListener {
+            // remove sharedPreferences
+            shared.edit().clear().apply()
+
+            // intent to LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
 
 
     }

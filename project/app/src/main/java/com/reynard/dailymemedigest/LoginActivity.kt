@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
                 val q = Volley.newRequestQueue(it.context)
 
                 // create api url
-                val url = "${Global.localApi}/login_process.php"
+                val url = "${Global.api}/login_process.php"
 
                 val stringRequest = object: StringRequest(
                     Request.Method.POST, url,

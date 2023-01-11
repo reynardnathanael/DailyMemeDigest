@@ -21,7 +21,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_add_meme.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.json.JSONObject
 
@@ -90,7 +89,7 @@ class SettingsFragment : Fragment() {
             val q = Volley.newRequestQueue(it.context)
 
             // create api url
-            val url = "${Global.localApi}/update_profile.php"
+            val url = "${Global.api}/update_profile.php"
 
             val stringRequest = object : StringRequest(
                 Request.Method.POST, url,

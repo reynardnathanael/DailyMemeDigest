@@ -9,16 +9,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
 
@@ -46,7 +42,7 @@ class HomeFragment : Fragment() {
         var q = Volley.newRequestQueue(activity)
 
         // create api url
-        val url = "${Global.localApi}/home_meme.php"
+        val url = "${Global.api}/home_meme.php"
 
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
