@@ -23,6 +23,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.card_meme.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -32,10 +34,7 @@ class SettingsFragment : Fragment() {
     val REQUEST_PERMISSIONS = 1
     val REQUEST_IMAGE_CAPTURE = 2
     val REQUEST_IMAGE_GALLERY = 3
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    var userid = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,15 +46,15 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var shared: SharedPreferences =
-            requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
 
-        val userid = shared.getInt("USERID", 0)
+        var shared:SharedPreferences=requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        userid = shared.getInt("USERID", 0)
         val username = shared.getString("USERNAME", "")
         val firstname = shared.getString("FIRSTNAME", "")
         var lastname = shared.getString("LASTNAME", "")
         val registdate = shared.getString("REGISTDATE", "")
         val privacy = shared.getInt("PRIVACY", 0)
+        val avatar = shared.getString("AVATAR", "")
         if (lastname == "null") {
             lastname = ""
         }
@@ -67,6 +66,7 @@ class SettingsFragment : Fragment() {
         if (privacy === 1) {
             checkHide.isChecked = true
         }
+        Picasso.get().load(avatar).into(imgAvatarSettings)
         imgAvatarSettings.setOnClickListener {
             Log.d("test", "button")
             if (ActivityCompat.checkSelfPermission(
@@ -105,14 +105,15 @@ class SettingsFragment : Fragment() {
                         .show()
 
                     if (obj.getString("result") == "success") {
-                        // retrieve JSON object named "data"
-                        val data = obj.getJSONObject("data")
-
+                        var privacy=0
+                        if (checkHide.isChecked) {
+                            privacy=1
+                        }
                         // put all the user's data to SharedPreferences
                         var editor: SharedPreferences.Editor = shared.edit()
-                        editor.putString("FIRSTNAME", data.getString("firstname"))
-                        editor.putString("LASTNAME", data.getString("lastname"))
-                        editor.putInt("PRIVACY", data.getInt("privacy_setting"))
+                        editor.putString("FIRSTNAME", txtFirstNameSettings.text.toString())
+                        editor.putString("LASTNAME", txtLastNameSettings.text.toString())
+                        editor.putInt("PRIVACY", privacy)
 
                         editor.apply()
                     }
@@ -190,9 +191,56 @@ class SettingsFragment : Fragment() {
         }
         imgAvatarSettings.setImageBitmap(imageBitmap)
         val byteArrayOutputStream = ByteArrayOutputStream()
-        imageBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        imageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-        val base64=Base64.encodeToString(byteArray,Base64.DEFAULT)
+        val base64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+
+        // create volley
+        val q = Volley.newRequestQueue(this.context)
+
+        // create api url
+        val url = "${Global.api}/update_avatar.php"
+
+        val stringRequest = object : StringRequest(
+            Request.Method.POST, url,
+            // if success...
+            Response.Listener {
+                // retrieve success message from api
+                val obj = JSONObject(it)
+
+                var shared:SharedPreferences=requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+                var editor: SharedPreferences.Editor = shared.edit()
+                editor.putString("AVATAR", "https://ubaya.fun/native/160720034/memes_api/img_profile/${userid}.jpg")
+
+                editor.apply()
+
+                Toast.makeText(requireContext(), obj.getString("message"), Toast.LENGTH_SHORT)
+                    .show()
+
+            },
+            // if error...
+            Response.ErrorListener {
+                Toast.makeText(
+                    requireContext(),
+                    "please check your input data!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        ) {
+            // injects data to send to API
+            override fun getParams(): MutableMap<String, String>? {
+                // collection of data <key, value>
+                var map = HashMap<String, String>()
+
+                // POST variables
+                map["avatar_img"] = base64
+                map["user_id"] = userid.toString()
+
+                return map
+            }
+        }
+
+        q.add(stringRequest)
     }
 
     fun takePicture() {
