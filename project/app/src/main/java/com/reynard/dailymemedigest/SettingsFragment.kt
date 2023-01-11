@@ -1,6 +1,7 @@
 package com.reynard.dailymemedigest
 
 import android.Manifest
+import android.R.attr.bitmap
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 
 
 class SettingsFragment : Fragment() {
@@ -175,14 +178,21 @@ class SettingsFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        var imageBitmap: Bitmap? = null
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK) {
-            val imageBitmap: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), data?.data)
-            imgAvatarSettings.setImageURI(data?.data)
+            imageBitmap = MediaStore.Images.Media.getBitmap(
+                requireActivity().getContentResolver(),
+                data?.data
+            )
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val extras = data!!.extras
-            val imageBitmap: Bitmap = extras!!.get("data") as Bitmap
-            imgAvatarSettings.setImageBitmap(imageBitmap)
+            imageBitmap = extras!!.get("data") as Bitmap
         }
+        imgAvatarSettings.setImageBitmap(imageBitmap)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        imageBitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+        val base64=Base64.encodeToString(byteArray,Base64.DEFAULT)
     }
 
     fun takePicture() {
