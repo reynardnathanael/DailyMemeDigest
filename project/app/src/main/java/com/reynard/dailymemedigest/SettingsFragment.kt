@@ -28,6 +28,9 @@ import kotlinx.android.synthetic.main.card_meme.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class SettingsFragment : Fragment() {
@@ -50,7 +53,7 @@ class SettingsFragment : Fragment() {
         var shared:SharedPreferences=requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
         userid = shared.getInt("USERID", 0)
         val username = shared.getString("USERNAME", "")
-        val firstname = shared.getString("FIRSTNAME", "")
+        var firstname = shared.getString("FIRSTNAME", "")
         var lastname = shared.getString("LASTNAME", "")
         val registdate = shared.getString("REGISTDATE", "")
         val privacy = shared.getInt("PRIVACY", 0)
@@ -58,8 +61,12 @@ class SettingsFragment : Fragment() {
         if (lastname == "null") {
             lastname = ""
         }
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val formatter = SimpleDateFormat("MMM yyyy")
+        val date = formatter.format(parser.parse(registdate))
+
         txtNameSettings.text = "$firstname $lastname"
-        txtRegisterDateSettings.text = "Active since $registdate"
+        txtRegisterDateSettings.text = "Active since $date"
         txtUsernameSettings.text = username
         txtFirstNameSettings.setText(firstname)
         txtLastNameSettings.setText(lastname)
@@ -116,6 +123,14 @@ class SettingsFragment : Fragment() {
                         editor.putInt("PRIVACY", privacy)
 
                         editor.apply()
+
+                        firstname = shared.getString("FIRSTNAME", "")
+                        lastname = shared.getString("LASTNAME", "")
+                        if (lastname == "null") {
+                            lastname = ""
+                        }
+
+                        txtNameSettings.text = "$firstname $lastname"
                     }
 
                 },
