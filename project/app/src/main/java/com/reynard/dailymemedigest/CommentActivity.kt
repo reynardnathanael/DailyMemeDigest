@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_comment.*
+import kotlinx.android.synthetic.main.comment_layout.view.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,6 +20,7 @@ import kotlin.collections.ArrayList
 
 class CommentActivity : AppCompatActivity() {
     var comments: ArrayList<Comment> = ArrayList()
+    private lateinit var finalNameInput: String
 
     fun displayList() {
         val lm: LinearLayoutManager = LinearLayoutManager(this)
@@ -71,6 +73,46 @@ class CommentActivity : AppCompatActivity() {
                     Log.d("commentLength", data.length().toString())
                     for (i in 0 until data.length()) {
                         val commentObj = data.getJSONObject(i)
+
+                        // change firstname and lastname to char array
+                        val firstname = commentObj.getString("firstname").toCharArray()
+                        val lastname = commentObj.getString("lastname").toCharArray()
+                        var finalName = ""
+
+                        // check if user is private or not
+                        if (commentObj.getInt("privacy_setting") == 0) {
+                            // if not, just assign the firstname and lastname to finalName
+                            finalName =
+                                commentObj.getString("firstname") + " " + commentObj.getString("lastname")
+                        } else {
+                            // if yes, then run this logic to display only the first 3 char
+                            var count = 3 // counter
+
+                            // loop for the first char array (firstname)
+                            for (i in firstname) {
+                                if (count > 0) {
+                                    finalName += i
+                                    count--
+                                } else {
+                                    finalName += "*"
+                                }
+                            }
+
+                            finalName += " "
+
+                            // loop for the second char array (firstname)
+                            for (i in lastname) {
+                                if (count > 0) {
+                                    finalName += i
+                                    count--
+                                } else {
+                                    finalName += "*"
+                                }
+                            }
+                        }
+
+                        finalNameInput = finalName
+
                         val comment = Comment(
                             commentObj.getInt("comment_id"),
                             commentObj.getInt("user_id"),
@@ -78,7 +120,8 @@ class CommentActivity : AppCompatActivity() {
                             commentObj.getString("content"),
                             commentObj.getString("comment_date"),
                             commentObj.getString("username"),
-                            commentObj.getString("avatar_img")
+                            commentObj.getString("avatar_img"),
+                            finalName
                         )
                         comments.add(comment)
                     }
@@ -120,13 +163,14 @@ class CommentActivity : AppCompatActivity() {
                 {
                     Log.d("addComment", it)
                     val comment = Comment(
-                        comments.get(comments.size-1).comment_id,
+                        comments.get(comments.size - 1).comment_id,
                         intent.getStringExtra(HomeAdapter.MEMEID).toString().toInt(),
                         intent.getStringExtra(HomeAdapter.USERID).toString().toInt(),
                         txtNewComment.text.toString(),
                         dateNow,
                         uname.toString(),
-                        avatar.toString()
+                        avatar.toString(),
+                        finalNameInput.toString()
                     )
                     comments.add(comment)
                     displayList()

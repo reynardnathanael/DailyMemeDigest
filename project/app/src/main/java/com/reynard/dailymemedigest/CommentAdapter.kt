@@ -22,7 +22,8 @@ class CommentAdapter(val comments: ArrayList<Comment>) :
         Picasso.get().load(url).into(holder.v.userImg_comment)
 
         holder.v.txtComment_comment.text = comments[position].content
-        holder.v.txtUser_comment.text = comments[position].username
+//        holder.v.txtUser_comment.text = comments[position].username
+        holder.v.txtUser_comment.text = comments[position].finalName
     }
 
     override fun getItemCount(): Int {
