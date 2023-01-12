@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_meme.view.*
+import kotlinx.android.synthetic.main.drawer_header.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -131,6 +132,9 @@ class SettingsFragment : Fragment() {
                         }
 
                         txtNameSettings.text = "$firstname $lastname"
+                        if(activity is MainActivity){
+                            (activity as MainActivity).updateDrawer()
+                        }
                     }
 
                 },

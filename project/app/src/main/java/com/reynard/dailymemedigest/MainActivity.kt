@@ -116,6 +116,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    public fun updateDrawer() {
+        var shared: SharedPreferences =
+            this.getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        var headerView: View = navigationView.getHeaderView(0)
+        val avatarImg = shared.getString("AVATAR", "")
+        val name = shared.getString("FIRSTNAME", "") + " " + shared.getString("LASTNAME", "")
+        Picasso.get().load(avatarImg).into(headerView.drawerImg)
+        headerView.drawer_name.text = name
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
