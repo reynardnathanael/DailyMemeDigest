@@ -28,6 +28,9 @@ import kotlinx.android.synthetic.main.card_meme.view.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class SettingsFragment : Fragment() {
@@ -58,8 +61,12 @@ class SettingsFragment : Fragment() {
         if (lastname == "null") {
             lastname = ""
         }
+        val parser = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val formatter = SimpleDateFormat("MMM yyyy")
+        val date = formatter.format(parser.parse(registdate))
+
         txtNameSettings.text = "$firstname $lastname"
-        txtRegisterDateSettings.text = "Active since $registdate"
+        txtRegisterDateSettings.text = "Active since $date"
         txtUsernameSettings.text = username
         txtFirstNameSettings.setText(firstname)
         txtLastNameSettings.setText(lastname)
