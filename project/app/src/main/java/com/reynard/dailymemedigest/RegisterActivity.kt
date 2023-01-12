@@ -3,11 +3,13 @@ package com.reynard.dailymemedigest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
 
@@ -15,6 +17,8 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        txtPassRegist.transformationMethod = PasswordTransformationMethod.getInstance()
+        txtRepassRegist.transformationMethod = PasswordTransformationMethod.getInstance()
 
         btnRegister.setOnClickListener {
             // check password
