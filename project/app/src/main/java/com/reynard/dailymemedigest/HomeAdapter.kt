@@ -48,6 +48,14 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
         holder.v.bottom_textView.text = memes[position].bottom_text
         holder.v.txtLike.text = memes[position].num_likes.toString() + " likes"
 
+        Log.d("isLike", memes[position].isLiked)
+        if(memes[position].isLiked == "true"){
+            holder.v.btnLike.setImageResource(R.drawable.ic_baseline_favorite_24)
+
+        }else if (memes[position].isLiked == "false"){
+            holder.v.btnLike.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+
         // for like
         holder.v.btnLike.setOnClickListener {
             // create volley
@@ -66,9 +74,11 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
                     when (obj.getString("message")) {
                         "like" -> {
                             memes[holder.adapterPosition].num_likes++
+                            holder.v.btnLike.setImageResource(R.drawable.ic_baseline_favorite_24)
                         }
                         "dislike" -> {
                             memes[holder.adapterPosition].num_likes--
+                            holder.v.btnLike.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                         }
                     }
                     var newlikes = memes[holder.adapterPosition].num_likes

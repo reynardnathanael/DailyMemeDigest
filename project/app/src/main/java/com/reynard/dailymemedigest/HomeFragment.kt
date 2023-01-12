@@ -64,7 +64,8 @@ class HomeFragment : Fragment() {
                             memeObj.getString("bottom_text"),
                             memeObj.getInt("num_likes"),
                             memeObj.getString("username"),
-                            memeObj.getString("avatar_img")
+                            memeObj.getString("avatar_img"),
+                            memeObj.getString("isLiked")
                         )
                         memes.add(meme)
                     }
@@ -88,6 +89,7 @@ class HomeFragment : Fragment() {
 
                 // POST variables
                 map["order"] = order_by
+                map["user_id"] = userId.toString()
                 return map
             }
         }

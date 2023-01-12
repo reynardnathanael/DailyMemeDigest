@@ -62,7 +62,8 @@ class MyCreationFragment : Fragment() {
                             memeObj.getString("bottom_text"),
                             memeObj.getInt("num_likes"),
                             memeObj.getString("username"),
-                            memeObj.getString("avatar_img")
+                            memeObj.getString("avatar_img"),
+                            memeObj.getString("isLiked")
                         )
                         myMemes.add(meme)
                     }
