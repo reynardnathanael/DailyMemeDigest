@@ -99,6 +99,11 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        addData(order);
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         addData(order);
     }

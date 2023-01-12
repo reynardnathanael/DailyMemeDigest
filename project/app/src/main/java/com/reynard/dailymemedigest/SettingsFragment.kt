@@ -23,6 +23,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_meme.view.*
 import kotlinx.android.synthetic.main.drawer_header.view.*
@@ -51,7 +53,8 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var shared:SharedPreferences=requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+        var shared: SharedPreferences =
+            requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
         userid = shared.getInt("USERID", 0)
         val username = shared.getString("USERNAME", "")
         var firstname = shared.getString("FIRSTNAME", "")
@@ -74,7 +77,9 @@ class SettingsFragment : Fragment() {
         if (privacy === 1) {
             checkHide.isChecked = true
         }
-        Picasso.get().load(avatar).into(imgAvatarSettings)
+        Log.d("avatar", avatar!!)
+        Picasso.get().load(avatar).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE).into(imgAvatarSettings)
         imgAvatarSettings.setOnClickListener {
             Log.d("test", "button")
             if (ActivityCompat.checkSelfPermission(
@@ -113,9 +118,9 @@ class SettingsFragment : Fragment() {
                         .show()
 
                     if (obj.getString("result") == "success") {
-                        var privacy=0
+                        var privacy = 0
                         if (checkHide.isChecked) {
-                            privacy=1
+                            privacy = 1
                         }
                         // put all the user's data to SharedPreferences
                         var editor: SharedPreferences.Editor = shared.edit()
@@ -132,7 +137,7 @@ class SettingsFragment : Fragment() {
                         }
 
                         txtNameSettings.text = "$firstname $lastname"
-                        if(activity is MainActivity){
+                        if (activity is MainActivity) {
                             (activity as MainActivity).updateDrawer()
                         }
                     }
@@ -227,14 +232,25 @@ class SettingsFragment : Fragment() {
                 // retrieve success message from api
                 val obj = JSONObject(it)
 
-                var shared:SharedPreferences=requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
+                var shared: SharedPreferences =
+                    requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
                 var editor: SharedPreferences.Editor = shared.edit()
-                editor.putString("AVATAR", "https://ubaya.fun/native/160720034/memes_api/img_profile/${userid}.jpg")
+                editor.putString(
+                    "AVATAR",
+                    "https://ubaya.fun/native/160720034/memes_api/img_profile/${userid}.jpg"
+                )
 
                 editor.apply()
 
+                Picasso.get()
+                    .invalidate("https://ubaya.fun/native/160720034/memes_api/img_profile/${userid}.jpg")
+
                 Toast.makeText(requireContext(), obj.getString("message"), Toast.LENGTH_SHORT)
                     .show()
+
+                if (activity is MainActivity) {
+                    (activity as MainActivity).updateDrawer()
+                }
 
             },
             // if error...

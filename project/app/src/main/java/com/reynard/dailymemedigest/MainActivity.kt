@@ -14,6 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer.*
@@ -85,7 +87,9 @@ class MainActivity : AppCompatActivity() {
         // set data diri user
         var headerView: View = navigationView.getHeaderView(0)
 
-        Picasso.get().load(avatarImg).into(headerView.drawerImg)
+        Picasso.get().load(avatarImg).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+            .into(headerView.drawerImg)
         headerView.drawer_username.text = username
         headerView.drawer_name.text = name
 
@@ -122,7 +126,9 @@ class MainActivity : AppCompatActivity() {
         var headerView: View = navigationView.getHeaderView(0)
         val avatarImg = shared.getString("AVATAR", "")
         val name = shared.getString("FIRSTNAME", "") + " " + shared.getString("LASTNAME", "")
-        Picasso.get().load(avatarImg).into(headerView.drawerImg)
+        Picasso.get().load(avatarImg).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+            .into(headerView.drawerImg)
         headerView.drawer_name.text = name
     }
 

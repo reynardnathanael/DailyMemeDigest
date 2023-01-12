@@ -11,6 +11,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_meme.view.*
 import org.json.JSONObject
@@ -19,7 +21,7 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
     RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     class HomeViewHolder(val v: View) : RecyclerView.ViewHolder(v)
 
-    companion object{
+    companion object {
         val USERID = "USERID"
         val MEMEID = "MEMEID"
         val MEMEUSERNAME = "MEMEUSERNAME"
@@ -38,7 +40,9 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         // for user
         val urlUser = memes[position].avatar_img
-        Picasso.get().load(urlUser).into(holder.v.memeUserImg)
+        Picasso.get().load(urlUser).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
+            .into(holder.v.memeUserImg)
         holder.v.userView.text = memes[position].username
 
         // for meme
@@ -49,10 +53,10 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
         holder.v.txtLike.text = memes[position].num_likes.toString() + " likes"
 
         Log.d("isLike", memes[position].isLiked)
-        if(memes[position].isLiked == "true"){
+        if (memes[position].isLiked == "true") {
             holder.v.btnLike.setImageResource(R.drawable.ic_baseline_favorite_24)
 
-        }else if (memes[position].isLiked == "false"){
+        } else if (memes[position].isLiked == "false") {
             holder.v.btnLike.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
 
@@ -111,7 +115,7 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
             // create api url
             val url = "${Global.api}/set_views.php"
 
-            val stringRequest = object: StringRequest(
+            val stringRequest = object : StringRequest(
                 Request.Method.POST, url,
                 // if success...
                 Response.Listener {
@@ -122,20 +126,30 @@ class HomeAdapter(val memes: ArrayList<Meme>, val user_id: String) :
                         // intent to CommentActivity
                         val commentIntent = Intent(holder.v.context, CommentActivity::class.java)
                         commentIntent.putExtra(USERID, user_id)
-                        commentIntent.putExtra(MEMEID, memes[holder.adapterPosition].meme_id.toString())
+                        commentIntent.putExtra(
+                            MEMEID,
+                            memes[holder.adapterPosition].meme_id.toString()
+                        )
                         commentIntent.putExtra(MEMEUSERNAME, memes[holder.adapterPosition].username)
                         commentIntent.putExtra(MEMEAVATAR, memes[holder.adapterPosition].avatar_img)
                         commentIntent.putExtra(MEMEIMG, memes[holder.adapterPosition].image_url)
                         commentIntent.putExtra(TOPTEXT, memes[holder.adapterPosition].top_text)
-                        commentIntent.putExtra(BOTTOMTEXT, memes[holder.adapterPosition].bottom_text)
+                        commentIntent.putExtra(
+                            BOTTOMTEXT,
+                            memes[holder.adapterPosition].bottom_text
+                        )
                         holder.v.context.startActivity(commentIntent)
                     }
                 },
                 // if error...
                 Response.ErrorListener {
-                    Toast.makeText(holder.v.context, "Sorry There's an Error in our system!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        holder.v.context,
+                        "Sorry There's an Error in our system!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            ){
+            ) {
                 // injects data to send to API
                 override fun getParams(): MutableMap<String, String>? {
                     // collection of data <key, value>
