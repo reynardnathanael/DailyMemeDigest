@@ -53,7 +53,7 @@ class SettingsFragment : Fragment() {
         var shared:SharedPreferences=requireActivity().getSharedPreferences(Global.sharedFile, Context.MODE_PRIVATE)
         userid = shared.getInt("USERID", 0)
         val username = shared.getString("USERNAME", "")
-        val firstname = shared.getString("FIRSTNAME", "")
+        var firstname = shared.getString("FIRSTNAME", "")
         var lastname = shared.getString("LASTNAME", "")
         val registdate = shared.getString("REGISTDATE", "")
         val privacy = shared.getInt("PRIVACY", 0)
@@ -123,6 +123,14 @@ class SettingsFragment : Fragment() {
                         editor.putInt("PRIVACY", privacy)
 
                         editor.apply()
+
+                        firstname = shared.getString("FIRSTNAME", "")
+                        lastname = shared.getString("LASTNAME", "")
+                        if (lastname == "null") {
+                            lastname = ""
+                        }
+
+                        txtNameSettings.text = "$firstname $lastname"
                     }
 
                 },
