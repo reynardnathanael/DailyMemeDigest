@@ -24,7 +24,7 @@ if (isset($_POST['image_url']) && isset($_POST['top_text']) && isset($_POST['bot
     $bottom_text = $_POST['bottom_text'];
     $user_id = $_POST['user_id'];
 
-    $sql = "INSERT INTO memes(image_url,top_text,bottom_text,user_id) VALUE(?,?,?,?)";
+    $sql = "INSERT INTO memes(image_url,top_text,bottom_text,user_id,num_likes) VALUE(?,?,?,?,0)";
     $stmt = $c->prepare($sql);
     $stmt->bind_param("ssss", $image_url, $top_text, $bottom_text, $user_id);
 
